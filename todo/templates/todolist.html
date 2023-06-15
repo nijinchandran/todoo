@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+   {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo</title>
+    <link rel="stylesheet" href="todo.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/92a4237cd4.js" crossorigin="anonymous"></script>
+   
+     
+</head>
+
+
+<style>
+
+  /* Common styles for light and dark mode */
+
+
+
+
+    *,
+*:before,
+*:after{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    
+    
+    
+}
+body{
+    height: 100vh;
+    font-family: 'Oswald', sans-serif;
+    background: rgb(41, 32, 78);
+
+background: linear-gradient(90deg, rgba(111, 81, 231, 0.19) 0%, rgba(92, 50, 133, 0.289) 100%);
+
+;
+
+filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#392D69", endColorstr="#B57BEE", GradientType=1 );
+    background-repeat: no-repeat;
+    background-size: 100% 31%; 
+     border: none;
+    background-color: #07010e;
+
+
+  
+
+
+}
+.container{
+    height: 1px;
+    width: 40%;
+    min-width: 450px;
+    position: absolute;
+    min-height: 100px;
+    transform: translate(-50%,-50%);
+    top: 35%;
+    left: 50%;
+    background-color: #311553;
+    border-radius: 5px;
+    box-shadow: 5px -4px rgba(0, 0, 0, 0.408);
+    transition: all .50s  ease;
+    color: #efebeb;
+   
+   
+  
+
+}
+
+
+
+
+
+#newtask{
+    position: relative;
+    padding: 29px 50px;
+    transition: all .50s ease;
+    background-color: #2b1447;
+   
+  
+
+    
+}
+
+
+
+
+
+#newtask input{
+    /* background: #C5C5C5; */
+    padding-right: 15px;
+    width: 100%;
+    height: 45px;
+    font-size: 17px;
+    background-color: #2b1447;
+    color: #efebeb;
+    border: 1px solid #562691 ;
+    font-family: 'Oswald', sans-serif;
+    padding: 12px;
+    text-align: center;
+   
+ 
+}
+
+#newtask button{
+  width: 44px;
+  height: 45px;
+    position: absolute;
+   margin-right: 0px;
+    font-size: 10px;
+    float: right;
+    font-weight: 500;
+    font-size: 22px;
+    background-color: #2b1447;
+    color: #ffffff;
+    cursor: pointer;
+    outline: none;
+     font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    border: none;
+}
+#task{
+  background-color: #2b1447;
+    padding: 30px 40px;
+    margin-top: 10px;
+    border-radius: 5px;
+    width: 100%;
+    position: relative;
+    box-shadow: 5px 5px rgba(0, 0, 0, 0.408);
+    color: #ffffffcb;
+    font-size: 18px;
+    transition: all .50s ease;
+    
+  
+    
+}
+
+
+
+
+
+#task:hover{
+  transform: translateY(-5px);
+
+}
+
+
+
+i{
+  color: rgb(190, 148, 234);
+ 
+  border-radius: 120px;
+
+}
+
+
+.ts{
+
+  width: 100%;
+  height: 150px;
+
+}
+
+h1{
+  color: #f1e6ff;
+  transition: all .50s ease-in-out;
+}
+
+
+.del{
+  background-color: transparent;
+  border: none;
+  margin-left:350px;
+ 
+  color: #f1e6ff;
+ 
+  
+}
+
+.ed{
+  background-color: transparent;
+  border: none;
+ margin-left: 10px;
+  color: #e7e7e8;
+
+}
+
+
+tr{
+  background-color: #2b1447;
+  transition: all .50s ease;
+}
+
+tr:hover{
+  transform: translateY(-5px);
+  border: 2px solid;
+}
+
+
+
+@media screen and (max-width:900px) {
+  #task{
+    padding: 30px 10px;
+
+
+  }
+  h1{
+    margin: 0px;
+    padding: 0;
+  }
+}
+
+ 
+
+
+
+</style>
+<body>
+
+   
+  
+
+
+
+
+ 
+
+<h1 style="text-align: center;margin-top: 100px;letter-spacing: 2px;">TODO</h1>
+  
+
+
+    <div class="container">
+        <form action="{% url 'addtodo' %}" method="post">
+            {% csrf_token %}
+
+        <div id="newtask">
+          <button id="push"><i class="fa fa-plus-square" ></i></button><input style="color: white;" name="content" type="text" autocomplete="off" placeholder="Task to be done..">
+           
+        </div>
+        <div id="task">
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in todos %}
+          
+              <tr>
+               <td style="padding-top: 20px;"> <i style="margin-right: 10px;" class="fa fa-check-square"></i>{{i.content}}</td>
+                <td><a  type="button" class="del" href="{%  url 'delete_todo' i.pk  %}"><i class="fa fa-trash-alt" style="color: rgb(190, 148, 234);font: 5px;padding-top: 20px;"></i></a></td>
+             
+              </tr>
+             
+                
+           
+              {% endfor%}
+            </tbody>
+          </table>
+
+    </form>
+    </div>
+
+
+
+</body>
+</html>
+
+
